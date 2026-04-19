@@ -314,3 +314,17 @@
 .hidden-input {
   display: none;
 }
+
+
+/* ============================================
+   Status Message (Phase 3)
+   ============================================ */
+.status-message {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-xs);
+  text-align: center;
+  letter-spacing: 0.08em;
+  padding: var(--spacing-sm) 0;
+  transition: color 0.6s ease;
+  animation: fadeIn 0.6s ease;
+}

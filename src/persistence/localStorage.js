@@ -1,6 +1,7 @@
 /**
  * localStorage persistence — auto-save/load
  * Phase 2: Care Loop
+ * Phase 3: Backward-compatible schema update (sustainedGoodCareStart)
  */
 
 const STORAGE_KEY = 'tamagotchi_save';
@@ -32,6 +33,11 @@ export function loadFromLocalStorage() {
     const state = JSON.parse(raw);
     if (!validateState(state)) return null;
 
+    // Phase 3: Backfill missing sustainedGoodCareStart for older saves
+    if (state.pet.sustainedGoodCareStart === undefined) {
+      state.pet.sustainedGoodCareStart = null;
+    }
+
     return state;
   } catch (e) {
     console.warn('Failed to load from localStorage:', e);
@@ -48,6 +54,7 @@ export function clearLocalStorage() {
 
 /**
  * Validate that a state object has the required structure.
+ * Phase 3: sustainedGoodCareStart is optional (backward compatible).
  */
 export function validateState(state) {
   if (!state || typeof state !== 'object') return false;
@@ -61,6 +68,15 @@ export function validateState(state) {
   if (typeof pet.happiness !== 'number') return false;
   if (typeof pet.energy !== 'number') return false;
   if (typeof pet.state !== 'string') return false;
+
+  // sustainedGoodCareStart: must be null, undefined, or a number (backward compatible)
+  if (
+    pet.sustainedGoodCareStart !== null &&
+    pet.sustainedGoodCareStart !== undefined &&
+    typeof pet.sustainedGoodCareStart !== 'number'
+  ) {
+    return false;
+  }
 
   return true;
 }

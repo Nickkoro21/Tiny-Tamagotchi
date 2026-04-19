@@ -1,6 +1,7 @@
 /**
  * Vitals — stat decay and update logic
  * Phase 1: Living Vitals
+ * Phase 3: Added decay multiplier support
  */
 
 /**
@@ -26,13 +27,19 @@ export function clamp(value, min = 0, max = 100) {
 
 /**
  * Apply stat decay based on elapsed time.
- * Pure function: (state, elapsedMs) → newState
+ * Pure function: (state, elapsedMs, multiplier?) → newState
+ * 
+ * Phase 3: Added multiplier parameter for state-based decay modifiers.
+ *   normal:  ×1.0 (default — backward compatible)
+ *   sick:    ×1.5 (stats drain faster)
+ *   evolved: ×0.7 (stats drain slower)
  * 
  * @param {Object} state - Current game state
  * @param {number} elapsedMs - Milliseconds since last tick
+ * @param {number} [multiplier=1.0] - Decay rate multiplier (from getDecayMultiplier)
  * @returns {Object} New state with decayed stats
  */
-export function applyDecay(state, elapsedMs) {
+export function applyDecay(state, elapsedMs, multiplier = 1.0) {
   if (elapsedMs <= 0) return state;
 
   // Cap catch-up to prevent jarring drops
@@ -45,9 +52,9 @@ export function applyDecay(state, elapsedMs) {
     ...state,
     pet: {
       ...pet,
-      hunger: clamp(pet.hunger - DECAY_RATES.hunger * elapsedMinutes),
-      happiness: clamp(pet.happiness - DECAY_RATES.happiness * elapsedMinutes),
-      energy: clamp(pet.energy - DECAY_RATES.energy * elapsedMinutes),
+      hunger: clamp(pet.hunger - DECAY_RATES.hunger * multiplier * elapsedMinutes),
+      happiness: clamp(pet.happiness - DECAY_RATES.happiness * multiplier * elapsedMinutes),
+      energy: clamp(pet.energy - DECAY_RATES.energy * multiplier * elapsedMinutes),
     },
   };
 }

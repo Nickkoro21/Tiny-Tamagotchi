@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { createInitialState } from './engine/gameState.js';
 import { applyDecay, feedPet, playWithPet, restPet } from './engine/vitals.js';
+import { evaluateStateTransition, getDecayMultiplier } from './engine/states.js';
 import { saveToLocalStorage, loadFromLocalStorage, clearLocalStorage } from './persistence/localStorage.js';
 import { exportToJson, importFromJson } from './persistence/jsonExport.js';
+import { Pet } from './components/Pet.jsx';
 import { Stats } from './components/Stats.jsx';
 import { Actions } from './components/Actions.jsx';
 import { Naming } from './components/Naming.jsx';
+import { StatusMessage } from './components/StatusMessage.jsx';
 
 const TICK_INTERVAL_MS = 1000;
 const AUTOSAVE_INTERVAL_MS = 30000;
@@ -21,7 +24,7 @@ export function App() {
   const lastTickRef = useRef(Date.now());
   const fileInputRef = useRef(null);
 
-  // --- Timer: decay tick ---
+  // --- Timer: decay tick + state evaluation ---
   useEffect(() => {
     if (showNaming || !gameState) return;
 
@@ -32,12 +35,25 @@ export function App() {
 
       setGameState((prev) => {
         if (!prev) return prev;
-        const next = applyDecay(prev, elapsed);
+
+        // Phase 3: Get decay multiplier based on current state
+        const multiplier = getDecayMultiplier(prev.pet.state);
+
+        // Step 1: Apply decay with state-based multiplier
+        const afterDecay = applyDecay(prev, elapsed, multiplier);
+
+        // Step 2: Evaluate state transitions
+        const afterState = evaluateStateTransition(afterDecay, now);
+
+        // Only re-render if something actually changed
         const changed =
-          Math.round(next.pet.hunger) !== Math.round(prev.pet.hunger) ||
-          Math.round(next.pet.happiness) !== Math.round(prev.pet.happiness) ||
-          Math.round(next.pet.energy) !== Math.round(prev.pet.energy);
-        return changed ? next : prev;
+          Math.round(afterState.pet.hunger) !== Math.round(prev.pet.hunger) ||
+          Math.round(afterState.pet.happiness) !== Math.round(prev.pet.happiness) ||
+          Math.round(afterState.pet.energy) !== Math.round(prev.pet.energy) ||
+          afterState.pet.state !== prev.pet.state ||
+          afterState.pet.sustainedGoodCareStart !== prev.pet.sustainedGoodCareStart;
+
+        return changed ? afterState : prev;
       });
     }, TICK_INTERVAL_MS);
 
@@ -67,12 +83,14 @@ export function App() {
     saveToLocalStorage(initial);
   };
 
-  // --- Care actions (save after each) ---
+  // --- Care actions (save after each + evaluate state) ---
   const handleAction = (actionFn) => {
     setGameState((prev) => {
-      const next = actionFn(prev);
-      saveToLocalStorage(next);
-      return next;
+      const afterAction = actionFn(prev);
+      // Phase 3: Evaluate state transitions after care action
+      const afterState = evaluateStateTransition(afterAction);
+      saveToLocalStorage(afterState);
+      return afterState;
     });
   };
 
@@ -96,7 +114,6 @@ export function App() {
       saveToLocalStorage(imported);
       lastTickRef.current = Date.now();
     }
-    // Reset input so same file can be re-imported
     e.target.value = '';
   };
 
@@ -117,16 +134,17 @@ export function App() {
   // --- Main Game ---
   if (!gameState) return null;
 
-  const { hunger, happiness, energy, name } = gameState.pet;
+  const { hunger, happiness, energy, name, state: petState } = gameState.pet;
 
   return (
-    <div class="app-layout">
-      {/* Pet blob + name */}
-      <div class="scaffold-screen" style={{ minHeight: 'auto', paddingTop: '48px' }}>
-        <div class="scaffold-blob" />
-        <h1 class="scaffold-title" style={{ fontSize: '1.6rem' }}>TINY TAMAGOTCHI</h1>
-        {name && <span class="pet-name">[ {name} ]</span>}
-      </div>
+    <div class={`app-layout app-layout--${petState}`}>
+      {/* Pet blob + name (Phase 3: state-aware component) */}
+      <Pet state={petState} name={name} />
+
+      <h1 class="scaffold-title" style={{ fontSize: '1.6rem' }}>TINY TAMAGOTCHI</h1>
+
+      {/* Status message (Phase 3) */}
+      <StatusMessage petState={petState} />
 
       {/* Stats */}
       <Stats hunger={hunger} happiness={happiness} energy={energy} />
@@ -137,11 +155,6 @@ export function App() {
         onPlay={() => handleAction(playWithPet)}
         onRest={() => handleAction(restPet)}
       />
-
-      {/* Status line */}
-      <p class="text-muted text-center" style={{ fontSize: 'var(--font-size-xs)' }}>
-        ▸ CARE SYSTEMS ONLINE
-      </p>
 
       {/* Footer: save/load/reset */}
       <div class="footer-actions">

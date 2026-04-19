@@ -1,6 +1,245 @@
 /* ============================================
    Pet — State-based animations & visuals
-   Phase 3: Implementation
+   Phase 3: Dynamic States
    ============================================ */
 
-/* TODO Phase 3: .pet--normal, .pet--sick, .pet--evolved styles */
+/* --- Pet Container --- */
+.pet-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xl) 0 var(--spacing-md);
+  position: relative;
+  transition: all 0.6s ease;
+}
+
+/* --- Pet Blob Base --- */
+.pet-blob {
+  width: 120px;
+  height: 120px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+  transition: all 0.6s ease;
+}
+
+/* --- Eyes --- */
+.pet-blob__eyes {
+  position: absolute;
+  top: 35%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+}
+
+.pet-blob__eye {
+  display: block;
+  width: 14px;
+  height: 18px;
+  background: var(--bg-primary);
+  border-radius: 50%;
+  transition: all 0.6s ease;
+}
+
+/* ============================================
+   NORMAL STATE — Cyan glow, smooth idle
+   ============================================ */
+.pet--normal .pet-blob {
+  background: radial-gradient(circle at 40% 35%, var(--accent-cyan), var(--bg-surface));
+  box-shadow: 0 0 40px var(--accent-cyan-glow),
+              0 0 80px rgba(0, 212, 255, 0.1);
+  animation: blobIdleNormal 4s ease-in-out infinite;
+}
+
+@keyframes blobIdleNormal {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  }
+  25% {
+    transform: translateY(-6px) scale(1.02);
+    border-radius: 48% 52% 48% 52% / 58% 62% 38% 42%;
+  }
+  50% {
+    transform: translateY(-2px) scale(0.98);
+    border-radius: 52% 48% 52% 48% / 62% 58% 42% 38%;
+  }
+  75% {
+    transform: translateY(-8px) scale(1.01);
+    border-radius: 50% 50% 50% 50% / 56% 64% 36% 44%;
+  }
+}
+
+/* ============================================
+   SICK STATE — Red glitch, distorted
+   ============================================ */
+.pet--sick .pet-blob {
+  background: radial-gradient(circle at 40% 35%, var(--accent-danger), #1a0510);
+  box-shadow: 0 0 40px var(--accent-danger-glow),
+              0 0 80px rgba(255, 34, 87, 0.15);
+  animation: blobIdleSick 0.8s ease-in-out infinite;
+}
+
+.pet--sick .pet-blob__eye {
+  height: 6px;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+@keyframes blobIdleSick {
+  0%, 100% {
+    transform: translateY(0) scale(1) skewX(0deg);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  }
+  15% {
+    transform: translateY(-2px) scale(0.97) skewX(-3deg);
+  }
+  30% {
+    transform: translateY(1px) scale(1.01) skewX(2deg);
+    border-radius: 45% 55% 55% 45% / 55% 65% 35% 45%;
+  }
+  50% {
+    transform: translateY(-1px) scale(0.99) skewX(-1deg);
+  }
+  70% {
+    transform: translateY(2px) scale(1.02) skewX(3deg);
+    border-radius: 55% 45% 45% 55% / 65% 55% 45% 35%;
+  }
+  85% {
+    transform: translateY(-1px) scale(0.98) skewX(-2deg);
+  }
+}
+
+/* Sick: static noise overlay */
+.pet-static-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 130px;
+  height: 130px;
+  transform: translate(-50%, -65%);
+  border-radius: 50%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 34, 87, 0.06) 2px,
+    rgba(255, 34, 87, 0.06) 4px
+  );
+  animation: staticFlicker 0.3s steps(3) infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+@keyframes staticFlicker {
+  0% { opacity: 0.6; transform: translate(-50%, -65%) scaleY(1); }
+  33% { opacity: 0.3; transform: translate(-50%, -66%) scaleY(1.02); }
+  66% { opacity: 0.8; transform: translate(-50%, -64%) scaleY(0.98); }
+  100% { opacity: 0.5; transform: translate(-50%, -65%) scaleY(1); }
+}
+
+/* Sick: pulsing red glow on container */
+.pet--sick {
+  animation: sickPulse 2s ease-in-out infinite;
+}
+
+@keyframes sickPulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(0.85); }
+}
+
+/* ============================================
+   EVOLVED STATE — Purple glow, shimmer, larger
+   ============================================ */
+.pet--evolved .pet-blob {
+  background: radial-gradient(circle at 40% 35%, var(--accent-evolved), #1a0a2e);
+  box-shadow: 0 0 50px var(--accent-evolved-glow),
+              0 0 100px rgba(168, 85, 247, 0.2),
+              inset 0 0 30px rgba(168, 85, 247, 0.1);
+  animation: blobIdleEvolved 5s ease-in-out infinite;
+  transform: scale(1.1);
+}
+
+.pet--evolved .pet-blob__eye {
+  background: var(--accent-evolved);
+  opacity: 0.9;
+  box-shadow: 0 0 6px var(--accent-evolved-glow);
+}
+
+@keyframes blobIdleEvolved {
+  0%, 100% {
+    transform: translateY(0) scale(1.1);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  }
+  25% {
+    transform: translateY(-8px) scale(1.12);
+    border-radius: 48% 52% 48% 52% / 58% 62% 38% 42%;
+  }
+  50% {
+    transform: translateY(-4px) scale(1.08);
+    border-radius: 52% 48% 52% 48% / 62% 58% 42% 38%;
+  }
+  75% {
+    transform: translateY(-10px) scale(1.11);
+    border-radius: 50% 50% 50% 50% / 56% 64% 36% 44%;
+  }
+}
+
+/* Evolved: shimmer particles */
+.pet-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 160px;
+  height: 160px;
+  transform: translate(-50%, -60%);
+  pointer-events: none;
+}
+
+.pet-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--accent-evolved);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleFloat 3s ease-in-out infinite;
+}
+
+.pet-particle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.pet-particle:nth-child(2) { top: 30%; left: 85%; animation-delay: 0.5s; }
+.pet-particle:nth-child(3) { top: 70%; left: 10%; animation-delay: 1s; }
+.pet-particle:nth-child(4) { top: 80%; left: 75%; animation-delay: 1.5s; }
+.pet-particle:nth-child(5) { top: 15%; left: 65%; animation-delay: 2s; }
+.pet-particle:nth-child(6) { top: 55%; left: 90%; animation-delay: 2.5s; }
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.8;
+    transform: translateY(-10px) scale(1);
+  }
+  80% {
+    opacity: 0.6;
+    transform: translateY(-30px) scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.3);
+  }
+}
+
+/* --- Evolved: subtle glow pulse on container --- */
+.pet--evolved {
+  animation: evolvedGlow 3s ease-in-out infinite;
+}
+
+@keyframes evolvedGlow {
+  0%, 100% { filter: brightness(1) saturate(1); }
+  50% { filter: brightness(1.1) saturate(1.15); }
+}
