@@ -112,3 +112,41 @@ describe('getStatLevel', () => {
     expect(getStatLevel(0)).toBe('critical');
   });
 });
+
+
+// ============================================
+// Phase 3: Decay Multiplier Tests
+// ============================================
+describe('applyDecay with multiplier (Phase 3)', () => {
+  it('decays 50% faster with sick multiplier (1.5)', () => {
+    const state = createInitialState('TestBot');
+    const normal = applyDecay(state, 10000, 1.0);
+    const sick = applyDecay(state, 10000, 1.5);
+
+    const normalDrop = 100 - normal.pet.hunger;
+    const sickDrop = 100 - sick.pet.hunger;
+
+    expect(sickDrop).toBeCloseTo(normalDrop * 1.5, 5);
+  });
+
+  it('decays 30% slower with evolved multiplier (0.7)', () => {
+    const state = createInitialState('TestBot');
+    const normal = applyDecay(state, 10000, 1.0);
+    const evolved = applyDecay(state, 10000, 0.7);
+
+    const normalDrop = 100 - normal.pet.hunger;
+    const evolvedDrop = 100 - evolved.pet.hunger;
+
+    expect(evolvedDrop).toBeCloseTo(normalDrop * 0.7, 5);
+  });
+
+  it('defaults to multiplier 1.0 when not provided (backward compatible)', () => {
+    const state = createInitialState('TestBot');
+    const withoutMultiplier = applyDecay(state, 10000);
+    const withMultiplier = applyDecay(state, 10000, 1.0);
+
+    expect(withoutMultiplier.pet.hunger).toBe(withMultiplier.pet.hunger);
+    expect(withoutMultiplier.pet.happiness).toBe(withMultiplier.pet.happiness);
+    expect(withoutMultiplier.pet.energy).toBe(withMultiplier.pet.energy);
+  });
+});

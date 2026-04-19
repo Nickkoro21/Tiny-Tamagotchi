@@ -75,3 +75,63 @@ describe('clearLocalStorage', () => {
     expect(loadFromLocalStorage()).toBeNull();
   });
 });
+
+
+// ============================================
+// Phase 3: Backward Compatibility Tests
+// ============================================
+describe('Phase 3 backward compatibility', () => {
+  it('save/load preserves sustainedGoodCareStart', () => {
+    const state = createInitialState('TestBot');
+    state.pet.sustainedGoodCareStart = 1700000000000;
+    saveToLocalStorage(state);
+    const loaded = loadFromLocalStorage();
+    expect(loaded.pet.sustainedGoodCareStart).toBe(1700000000000);
+  });
+
+  it('loads Phase 2 save missing sustainedGoodCareStart (defaults to null)', () => {
+    // Simulate a Phase 2 save that has no sustainedGoodCareStart field
+    const oldSave = {
+      pet: {
+        name: 'OldBot',
+        hunger: 80,
+        happiness: 70,
+        energy: 60,
+        state: 'normal',
+        createdAt: Date.now(),
+        totalCareActions: 5,
+        lastFed: Date.now(),
+        lastPlayed: Date.now(),
+        lastRested: Date.now(),
+        // Note: NO sustainedGoodCareStart field
+      },
+      meta: {
+        lastSaveTime: Date.now(),
+        version: '1.0.0',
+      },
+    };
+    localStorage.setItem('tamagotchi_save', JSON.stringify(oldSave));
+    const loaded = loadFromLocalStorage();
+    expect(loaded).not.toBeNull();
+    expect(loaded.pet.name).toBe('OldBot');
+    expect(loaded.pet.sustainedGoodCareStart).toBeNull();
+  });
+
+  it('validateState accepts state with sustainedGoodCareStart', () => {
+    const state = createInitialState('Bot');
+    state.pet.sustainedGoodCareStart = Date.now();
+    expect(validateState(state)).toBe(true);
+  });
+
+  it('validateState accepts state with null sustainedGoodCareStart', () => {
+    const state = createInitialState('Bot');
+    state.pet.sustainedGoodCareStart = null;
+    expect(validateState(state)).toBe(true);
+  });
+
+  it('validateState rejects invalid sustainedGoodCareStart type', () => {
+    const state = createInitialState('Bot');
+    state.pet.sustainedGoodCareStart = 'not-a-timestamp';
+    expect(validateState(state)).toBe(false);
+  });
+});
