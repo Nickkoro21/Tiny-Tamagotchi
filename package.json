@@ -1,0 +1,22 @@
+{
+  "name": "tiny-tamagotchi",
+  "version": "0.1.0",
+  "description": "A sci-fi themed virtual pet web app — SDD Challenge",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "preact": "^10.25.4"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.9.4",
+    "jsdom": "^29.0.2",
+    "vite": "^6.3.2",
+    "vitest": "^3.1.1"
+  }
+}

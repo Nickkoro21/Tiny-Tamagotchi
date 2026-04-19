@@ -1,0 +1,215 @@
+/* ============================================
+   Tiny Tamagotchi — Sci-Fi Dark Theme
+   ============================================ */
+
+/* --- CSS Custom Properties --- */
+:root {
+  /* Background & Surface */
+  --bg-primary: #060b14;
+  --bg-secondary: #0d1525;
+  --bg-surface: #111b2e;
+  --bg-surface-hover: #162240;
+
+  /* Text */
+  --text-primary: #e0e8f5;
+  --text-secondary: #7a8ba8;
+  --text-muted: #4a5872;
+
+  /* Accent Colors — State-based */
+  --accent-cyan: #00d4ff;
+  --accent-cyan-glow: rgba(0, 212, 255, 0.3);
+  --accent-warning: #ff9f1c;
+  --accent-warning-glow: rgba(255, 159, 28, 0.3);
+  --accent-danger: #ff2257;
+  --accent-danger-glow: rgba(255, 34, 87, 0.3);
+  --accent-evolved: #a855f7;
+  --accent-evolved-glow: rgba(168, 85, 247, 0.3);
+  --accent-success: #22c55e;
+
+  /* Stat Bar Colors */
+  --stat-hunger: #ff6b35;
+  --stat-happiness: #fbbf24;
+  --stat-energy: #38bdf8;
+
+  /* Layout */
+  --border-radius: 12px;
+  --border-radius-sm: 6px;
+  --container-max-width: 480px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Typography */
+  --font-display: 'Orbitron', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-size-xs: 0.7rem;
+  --font-size-sm: 0.85rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.75rem;
+  --font-size-xxl: 2.5rem;
+
+  /* Effects */
+  --glow-intensity: 0.5;
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 600ms ease;
+}
+
+/* --- Reset & Base --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-mono);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+}
+
+/* Subtle scan-line overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+#app {
+  width: 100%;
+  max-width: var(--container-max-width);
+  min-height: 100vh;
+  padding: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --- Utility Classes --- */
+.text-center { text-align: center; }
+.text-mono { font-family: var(--font-mono); }
+.text-display { font-family: var(--font-display); }
+.text-muted { color: var(--text-secondary); }
+
+/* --- Placeholder Screen --- */
+.scaffold-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-lg);
+  min-height: 80vh;
+  text-align: center;
+}
+
+.scaffold-title {
+  font-family: var(--font-display);
+  font-size: var(--font-size-xxl);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: var(--accent-cyan);
+  text-shadow: 0 0 20px var(--accent-cyan-glow),
+               0 0 60px rgba(0, 212, 255, 0.15);
+  animation: titlePulse 3s ease-in-out infinite;
+}
+
+.scaffold-subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.scaffold-status {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  border: 1px solid var(--text-muted);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--border-radius-sm);
+}
+
+.scaffold-blob {
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle at 40% 35%, var(--accent-cyan), var(--bg-surface));
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  box-shadow: 0 0 40px var(--accent-cyan-glow),
+              0 0 80px rgba(0, 212, 255, 0.1);
+  animation: blobIdle 4s ease-in-out infinite;
+  position: relative;
+}
+
+/* Blob eyes */
+.scaffold-blob::before,
+.scaffold-blob::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 18px;
+  background: var(--bg-primary);
+  border-radius: 50%;
+  top: 35%;
+}
+
+.scaffold-blob::before { left: 30%; }
+.scaffold-blob::after { right: 30%; }
+
+/* --- Animations --- */
+@keyframes titlePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+@keyframes blobIdle {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  }
+  25% {
+    transform: translateY(-6px) scale(1.02);
+    border-radius: 48% 52% 48% 52% / 58% 62% 38% 42%;
+  }
+  50% {
+    transform: translateY(-2px) scale(0.98);
+    border-radius: 52% 48% 52% 48% / 62% 58% 42% 38%;
+  }
+  75% {
+    transform: translateY(-8px) scale(1.01);
+    border-radius: 50% 50% 50% 50% / 56% 64% 36% 44%;
+  }
+}
+
+
+/* --- App Layout (Phase 1+) --- */
+.app-layout {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: var(--spacing-xl);
+}
