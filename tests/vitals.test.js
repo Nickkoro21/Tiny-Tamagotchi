@@ -24,13 +24,15 @@ describe('clamp', () => {
 describe('DECAY_RATES', () => {
   it('exports configurable decay rates', () => {
     expect(DECAY_RATES.hunger).toBe(200);
-    expect(DECAY_RATES.happiness).toBe(300);
+    expect(DECAY_RATES.happiness).toBe(171.43);
     expect(DECAY_RATES.energy).toBe(133.33);
   });
 
-  it('happiness drains fastest, energy slowest', () => {
-    expect(DECAY_RATES.happiness).toBeGreaterThan(DECAY_RATES.hunger);
-    expect(DECAY_RATES.hunger).toBeGreaterThan(DECAY_RATES.energy);
+  it('hunger drains fastest, energy slowest', () => {
+    // Replan: happiness tuned down from 300 to 171.43 (20s → 35s drain)
+    // Hunger now drains fastest (30s), happiness is mid-speed (35s), energy slowest (45s)
+    expect(DECAY_RATES.hunger).toBeGreaterThan(DECAY_RATES.happiness);
+    expect(DECAY_RATES.happiness).toBeGreaterThan(DECAY_RATES.energy);
   });
 });
 
@@ -53,9 +55,9 @@ describe('applyDecay', () => {
     expect(Math.round(result.pet.hunger)).toBe(0);
   });
 
-  it('drains happiness to 0 in ~20 seconds', () => {
+  it('drains happiness to 0 in ~35 seconds', () => {
     const state = createInitialState('TestBot');
-    const result = applyDecay(state, 20000); // 20s
+    const result = applyDecay(state, 35000); // 35s — tuned from 20s
     expect(Math.round(result.pet.happiness)).toBe(0);
   });
 

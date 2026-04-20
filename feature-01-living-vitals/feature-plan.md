@@ -12,7 +12,8 @@ The player sees three stat bars on screen that visually decrease over time. Each
 
 ### Group 1: Game State & Decay Engine
 - Implement `applyDecay(state, elapsedMs)` in `engine/vitals.js`
-- Decay rates (per minute): Hunger -2, Happiness -1.5, Energy -1
+- Decay rates (per minute): Hunger -200, Happiness -171.43, Energy -133.33
+  (Full drain times: Hunger ~30s, Happiness ~35s, Energy ~45s)
 - All stats clamped to 0–100 range
 - Calculate decay based on actual elapsed time (not fixed tick)
 - Handle large time gaps gracefully (e.g., tab was inactive for 10 minutes)
@@ -62,3 +63,11 @@ Engine-first: build and test the decay logic as pure functions before touching U
 | Timer drift in background tabs | Use elapsed-time calculation, not fixed decrements |
 | Stats hitting 0 too fast/slow | Rates are configurable; will tune after seeing it run |
 | CSS transitions janky on mobile | Keep animations simple, use `transform` and `opacity` |
+
+## Replan History
+
+- **Post-Phase-4 replan**: Happiness decay rate adjusted from -300/min (~20s drain)
+  to -171.43/min (~35s drain). Original 20s felt too punishing during casual play.
+  New cadence: Hunger (30s) → Happiness (35s) → Energy (45s), with Hunger now the
+  fastest-draining stat. All dependent artifacts updated (tech-stack, requirements,
+  validation, README, video labels).

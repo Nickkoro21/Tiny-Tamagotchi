@@ -106,7 +106,7 @@ Hunger · Happiness · Energy · 0–100 scale
 ⏱️ Real-time decay
 ```
 ```
-Happiness drains fastest (20s) · Energy slowest (45s)
+Hunger drains fastest (30s) · Happiness (35s) · Energy slowest (45s)
 ```
 
 ---
