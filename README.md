@@ -13,7 +13,7 @@ A virtual pet web app built with **Spec-Driven Development** — where the speci
 
 > _🎬 **Video walkthrough coming soon** — will be embedded here._
 >
-> _Planned coverage: naming a pet, real-time vitals decay, the care loop (Feed / Play / Rest), the state machine (Normal → Sick recovery + Normal → Evolved), personality messages cycling, and easter-egg names (`Maverick`, `HAL`, `Nick Koro`)._
+> _Planned coverage: naming a pet, real-time vitals decay, the care loop (Feed / Play / Rest), the state machine (Normal → Sick recovery + Normal → Evolved), personality messages cycling, and easter-egg names (`Nick Koro`, `Maverick`, `HAL`)._
 
 <!-- Once uploaded, replace the above blockquote with one of these formats:
 
@@ -40,7 +40,7 @@ Local setup in [Setup](#-setup) below — `npm install && npm run dev` → `http
 ## ✨ Features — The Four Pillars
 
 ### 1. Living Vitals
-Three stats (Hunger, Happiness, Energy) on a 0–100 scale that decay automatically in real time at different rates (Happiness fastest, Energy slowest). Visual color feedback shifts from healthy → warning → low → critical as stats drop.
+Three stats (Hunger, Happiness, Energy) on a 0–100 scale that decay automatically in real time at different rates — **Hunger fastest (~30 s), Happiness mid (~35 s), Energy slowest (~45 s)**. Visual color feedback shifts from healthy → warning → low → critical as stats drop.
 
 ### 2. The Care Loop
 Three actions — **Feed** (+30 hunger / +5 happiness), **Play** (+25 happiness / −10 energy), **Rest** (+35 energy / +5 happiness) — each with its own cooldown (3–5 s). Pet naming on first launch. State persists via `localStorage` with JSON export/import backup.

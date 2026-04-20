@@ -12,13 +12,17 @@
 - Stats decrease automatically over real time
 - Decay is calculated based on elapsed milliseconds, not per-tick fixed amounts
 - Decay rates (per minute, configurable):
-  | Stat      | Rate     |
-  |-----------|----------|
-  | Hunger    | -200/min  |
-  | Happiness | -300/min  |
-  | Energy    | -133/min  |
+
+  | Stat      | Rate          | Full drain time | Relative speed         |
+  |-----------|---------------|-----------------|------------------------|
+  | Hunger    | -200/min      | ~30 seconds     | Fastest                |
+  | Happiness | -171.43/min   | ~35 seconds     | Mid (5s slower than hunger) |
+  | Energy    | -133.33/min   | ~45 seconds     | Slowest                |
+
 - Decay formula: `newValue = oldValue - (rate * elapsedMinutes)`
 - Decay continues accumulating when the browser tab is inactive (catch-up on return)
+- **Replan note (post-Phase-4):** Happiness was originally -300/min (~20s drain) but
+  tuned down to -171.43/min (~35s) for a smoother care cadence
 
 ### FR-3: Timer System
 - A 1-second interval drives the decay tick

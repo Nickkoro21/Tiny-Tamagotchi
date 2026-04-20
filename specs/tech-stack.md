@@ -138,11 +138,16 @@ Vitals decay using `requestAnimationFrame` or `setInterval` (1-second tick). On 
 - Check for state transitions
 
 Decay rates (per minute, configurable):
-| Stat      | Decay Rate | Notes                          |
-|-----------|-----------|--------------------------------|
-| Hunger    | -200/min  | Fastest decay (~30s drain) — demo speed |
-| Happiness | -300/min  | Fastest stat (~20s drain) — demo speed |
-| Energy    | -133/min  | Slowest decay (~45s drain) — demo speed |
+
+| Stat      | Decay Rate   | Full drain time | Notes                                      |
+|-----------|--------------|-----------------|--------------------------------------------|
+| Hunger    | -200/min     | ~30 seconds     | Fastest decay — demo speed                 |
+| Happiness | -171.43/min  | ~35 seconds     | Mid-speed (5s slower than hunger) — tuned post-Phase-4 |
+| Energy    | -133.33/min  | ~45 seconds     | Slowest decay — demo speed                 |
+
+**Replan note (post-Phase-4):** Happiness was originally 20 seconds (-300/min) but felt
+too punishing during casual play. Adjusted to 35 seconds so the care cadence is smoother
+and Hunger becomes the fastest-draining stat instead of Happiness.
 
 ### 5. Styling Strategy
 

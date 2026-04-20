@@ -73,10 +73,10 @@ plan · requirements · validation
 
 ### Label 4-A (at 0:43, duration 4s) — 🔵 CYAN
 ```
-🛩️ Easter Egg: Aviation Callsign
+🎖️ Easter Egg: Personal Tribute
 ```
 ```
-Type "Maverick" and see what happens
+Type "Nick Koro" — the project author
 ```
 
 ### Label 4-B (at 0:51, duration 5s, appears WHEN reaction shows) — 🟢 GREEN
@@ -106,7 +106,7 @@ Hunger · Happiness · Energy · 0–100 scale
 ⏱️ Real-time decay
 ```
 ```
-Happiness drains fastest (20s) · Energy slowest (45s)
+Hunger drains fastest (30s) · Happiness (35s) · Energy slowest (45s)
 ```
 
 ---

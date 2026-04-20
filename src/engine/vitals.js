@@ -2,18 +2,23 @@
  * Vitals — stat decay and update logic
  * Phase 1: Living Vitals
  * Phase 3: Added decay multiplier support
+ * Replan (post-Phase-4): Happiness decay tuned from 20s to 35s
  */
 
 /**
  * Decay rates per minute (configurable).
  * Target drain times from full (100 → 0):
- *   Hunger:    30 seconds  → 200/min
- *   Happiness: 20 seconds  → 300/min
- *   Energy:    45 seconds  → 133.33/min
+ *   Hunger:    30 seconds  → 200/min     (fastest)
+ *   Happiness: 35 seconds  → 171.43/min  (5s slower than hunger)
+ *   Energy:    45 seconds  → 133.33/min  (slowest)
+ *
+ * Replan note: Happiness was originally 20 seconds (300/min) but felt
+ * too punishing during casual play. Tuned to 35 seconds for smoother
+ * care cadence — now Hunger drains fastest, not Happiness.
  */
 export const DECAY_RATES = {
   hunger: 200,
-  happiness: 300,
+  happiness: 171.43,
   energy: 133.33,
 };
 
