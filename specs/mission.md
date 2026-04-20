@@ -26,7 +26,7 @@ A single user cares for a single digital pet through three core actions (Feed, P
 Three stats (Hunger, Happiness, Energy) on a 0–100 scale that decrease automatically over time. Visual indicators show the pet's current condition at a glance.
 
 ### 2. The Care Loop
-Three player actions — **Feed**, **Play**, **Rest** — each restore specific stats. Actions have cooldowns or diminishing returns to encourage balanced care rather than button-mashing.
+Three player actions — **Feed**, **Play**, **Rest** — each restore specific stats. Actions have cooldowns to encourage balanced care rather than button-mashing.
 
 ### 3. Dynamic States
 The pet transitions between states based on vitals:

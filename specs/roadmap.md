@@ -56,13 +56,12 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
   - Play: +25 Happiness, -10 Energy
   - Rest: +35 Energy, +5 Happiness
 - [ ] Implement cooldown system (per action, configurable duration)
-- [ ] Implement diminishing returns for repeated same-action
 - [ ] Build `Actions.jsx` — three action buttons with cooldown indicators
 - [ ] Build `Naming.jsx` — initial pet naming screen (shown once at first launch)
 - [ ] Implement localStorage auto-save (save on action + periodic)
 - [ ] Implement JSON export/import functionality
 - [ ] Visual feedback: button animations, stat bar response
-- [ ] Unit tests for action effects, cooldowns, diminishing returns
+- [ ] Unit tests for action effects, cooldowns
 - [ ] Unit tests for persistence (save/load/export/import)
 
 **Deliverable:** Fully interactive care loop — name pet, perform actions, stats respond, state persists.
@@ -80,6 +79,7 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
   - **Sick → Normal:** All stats restored to ≥ 50 (recovery path; `sustainedGoodCareStart` is reset to `null` — evolution must be re-earned)
   - **Normal → Evolved:** `totalCareActions ≥ 6` **AND** all stats `> 70` for `≥ 15 s` sustained
   - **Evolved → Sick:** Any stat drops below 20 (Evolved pet is resilient but not invincible — there is no direct Evolved → Normal transition)
+- [ ] **Zero Stats Edge Case (FR-9):** When all three stats = 0, pet remains in Sick state (no permanent death per challenge rules); care actions remain fully functional; status shows `⚠ CRITICAL STASIS — Use Feed, Play, Rest to restore systems` hint in `--accent-danger` color; recovery follows standard Sick → Normal path when all stats ≥ 50
 - [ ] Define state transition rules with clear thresholds
 - [ ] Build visual states in `pet.css`:
   - Normal: cyan glow, smooth idle animation
