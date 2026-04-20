@@ -2,6 +2,7 @@
  * localStorage persistence — auto-save/load
  * Phase 2: Care Loop
  * Phase 3: Backward-compatible schema update (sustainedGoodCareStart)
+ * Phase 4: Added lastMilestoneShown backfill
  */
 
 const STORAGE_KEY = 'tamagotchi_save';
@@ -38,6 +39,11 @@ export function loadFromLocalStorage() {
       state.pet.sustainedGoodCareStart = null;
     }
 
+    // Phase 4: Backfill missing lastMilestoneShown for older saves
+    if (state.pet.lastMilestoneShown === undefined) {
+      state.pet.lastMilestoneShown = 0;
+    }
+
     return state;
   } catch (e) {
     console.warn('Failed to load from localStorage:', e);
@@ -55,6 +61,7 @@ export function clearLocalStorage() {
 /**
  * Validate that a state object has the required structure.
  * Phase 3: sustainedGoodCareStart is optional (backward compatible).
+ * Phase 4: lastMilestoneShown is optional (backward compatible).
  */
 export function validateState(state) {
   if (!state || typeof state !== 'object') return false;
@@ -69,11 +76,19 @@ export function validateState(state) {
   if (typeof pet.energy !== 'number') return false;
   if (typeof pet.state !== 'string') return false;
 
-  // sustainedGoodCareStart: must be null, undefined, or a number (backward compatible)
+  // sustainedGoodCareStart: must be null, undefined, or a number
   if (
     pet.sustainedGoodCareStart !== null &&
     pet.sustainedGoodCareStart !== undefined &&
     typeof pet.sustainedGoodCareStart !== 'number'
+  ) {
+    return false;
+  }
+
+  // lastMilestoneShown: must be undefined or a number
+  if (
+    pet.lastMilestoneShown !== undefined &&
+    typeof pet.lastMilestoneShown !== 'number'
   ) {
     return false;
   }

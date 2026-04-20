@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'preact/hooks';
 import { createInitialState } from './engine/gameState.js';
 import { applyDecay, feedPet, playWithPet, restPet } from './engine/vitals.js';
 import { evaluateStateTransition, getDecayMultiplier } from './engine/states.js';
+import { checkMilestone, getEasterEggGreeting } from './engine/personality.js';
 import { saveToLocalStorage, loadFromLocalStorage, clearLocalStorage } from './persistence/localStorage.js';
 import { exportToJson, importFromJson } from './persistence/jsonExport.js';
 import { Pet } from './components/Pet.jsx';
@@ -21,10 +22,12 @@ export function App() {
   });
 
   const [showNaming, setShowNaming] = useState(gameState === null);
+  const [messageForceUpdate, setMessageForceUpdate] = useState(0);
+  const [easterEggMsg, setEasterEggMsg] = useState(null);
   const lastTickRef = useRef(Date.now());
   const fileInputRef = useRef(null);
 
-  // --- Timer: decay tick + state evaluation ---
+  // --- Timer: decay tick + state evaluation + milestone check ---
   useEffect(() => {
     if (showNaming || !gameState) return;
 
@@ -81,17 +84,45 @@ export function App() {
     setShowNaming(false);
     lastTickRef.current = Date.now();
     saveToLocalStorage(initial);
+
+    // Phase 4: Check for easter egg name
+    const greeting = getEasterEggGreeting(name);
+    if (greeting) {
+      setEasterEggMsg(greeting);
+      setTimeout(() => setEasterEggMsg(null), 5000);
+    }
   };
 
-  // --- Care actions (save after each + evaluate state) ---
+  // --- Care actions (save after each + evaluate state + milestone) ---
   const handleAction = (actionFn) => {
     setGameState((prev) => {
       const afterAction = actionFn(prev);
       // Phase 3: Evaluate state transitions after care action
       const afterState = evaluateStateTransition(afterAction);
-      saveToLocalStorage(afterState);
-      return afterState;
+
+      // Phase 4: Check for milestone
+      const milestone = checkMilestone(
+        afterState.pet.totalCareActions,
+        afterState.pet.lastMilestoneShown || 0
+      );
+
+      let finalState = afterState;
+      if (milestone) {
+        finalState = {
+          ...afterState,
+          pet: {
+            ...afterState.pet,
+            lastMilestoneShown: milestone.threshold,
+          },
+        };
+      }
+
+      saveToLocalStorage(finalState);
+      return finalState;
     });
+
+    // Force StatusMessage to update immediately
+    setMessageForceUpdate((c) => c + 1);
   };
 
   // --- JSON export ---
@@ -123,6 +154,7 @@ export function App() {
       clearLocalStorage();
       setGameState(null);
       setShowNaming(true);
+      setEasterEggMsg(null);
     }
   };
 
@@ -143,8 +175,17 @@ export function App() {
 
       <h1 class="scaffold-title" style={{ fontSize: '1.6rem' }}>TINY TAMAGOTCHI</h1>
 
-      {/* Status message (Phase 3) */}
-      <StatusMessage petState={petState} />
+      {/* Status message (Phase 4: dynamic personality) */}
+      {easterEggMsg ? (
+        <p class="status-message" style={{ color: 'var(--accent-success)' }}>
+          {easterEggMsg}
+        </p>
+      ) : (
+        <StatusMessage
+          gameState={gameState}
+          forceUpdate={messageForceUpdate}
+        />
+      )}
 
       {/* Stats */}
       <Stats hunger={hunger} happiness={happiness} energy={energy} />

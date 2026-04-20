@@ -163,9 +163,10 @@
 }
 
 .pet--evolved .pet-blob__eye {
-  background: var(--accent-evolved);
-  opacity: 0.9;
-  box-shadow: 0 0 6px var(--accent-evolved-glow);
+  background: #f0e6ff;
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(240, 230, 255, 0.8),
+              0 0 16px rgba(168, 85, 247, 0.4);
 }
 
 @keyframes blobIdleEvolved {
@@ -242,4 +243,39 @@
 @keyframes evolvedGlow {
   0%, 100% { filter: brightness(1) saturate(1); }
   50% { filter: brightness(1.1) saturate(1.15); }
+}
+
+
+/* ============================================
+   Eye Blink Animation (Phase 4: Polish)
+   ============================================ */
+.pet--normal .pet-blob__eye,
+.pet--evolved .pet-blob__eye {
+  animation: eyeBlink 4s ease-in-out infinite;
+}
+
+@keyframes eyeBlink {
+  0%, 42%, 44%, 100% { transform: scaleY(1); }
+  43% { transform: scaleY(0.1); }
+}
+
+/* Sick eyes don't blink — they squint */
+.pet--sick .pet-blob__eye {
+  animation: none;
+}
+
+/* ============================================
+   Evolution Celebration (Phase 4)
+   Brief burst when entering Evolved state
+   ============================================ */
+.pet--evolved .pet-blob {
+  animation: blobIdleEvolved 5s ease-in-out infinite,
+             evolvedCelebration 0.8s ease-out 1;
+}
+
+@keyframes evolvedCelebration {
+  0% { transform: scale(1.1); filter: brightness(1); }
+  30% { transform: scale(1.25); filter: brightness(1.6); }
+  60% { transform: scale(1.05); filter: brightness(1.2); }
+  100% { transform: scale(1.1); filter: brightness(1); }
 }

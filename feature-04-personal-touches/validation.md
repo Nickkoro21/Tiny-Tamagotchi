@@ -126,7 +126,7 @@ Phase 4 is **DONE** when:
 3. ✅ Messages cycle with variety (4-5 per category)
 4. ✅ Low stat warnings appear contextually
 5. ✅ Stat combinations trigger special messages
-6. ✅ Name-based easter eggs work (8 names including aviation)
+6. ✅ Name-based easter eggs work (11 names including aviation and personal)
 7. ✅ Milestone easter eggs trigger and don't repeat
 8. ✅ Rare random messages appear occasionally
 9. ✅ Message transitions are smooth (fade effect)

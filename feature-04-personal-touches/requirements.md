@@ -58,6 +58,9 @@
   | Goose | Aviation | "Talk to me, Goose... oh wait, I AM Goose! 🪿" |
   | Iceman | Aviation | "You can be my wingman anytime. ❄️" |
   | Viper | Aviation | "Tower, this is Viper requesting immediate care. 🗼" |
+  | Nick | Personal | "Hey Nick! Ready for some spec-driven caring? 📋" |
+  | Koro | Personal | "Koro on deck! All specs checked, systems go! ✈️" |
+  | Nick Koro | Personal | "The architect himself! SDD workflow activated. Welcome aboard, Captain! 🎖️" |
 - Matching is case-insensitive: "hal", "HAL", "Hal" all match
 
 ### FR-7: Easter Eggs — Milestone-Based

@@ -1,7 +1,8 @@
 /**
  * Game State — central state object and factory
  * Phase 1: Initial implementation
- * Phase 3: Added sustainedGoodCareStart for evolution tracking
+ * Phase 3: Added sustainedGoodCareStart
+ * Phase 4: Added lastMilestoneShown
  */
 
 /** Creates a fresh game state for a new pet */
@@ -20,6 +21,7 @@ export function createInitialState(petName = '') {
       lastPlayed: now,
       lastRested: now,
       sustainedGoodCareStart: null, // Phase 3: timestamp (ms) or null
+      lastMilestoneShown: 0,       // Phase 4: last milestone threshold shown
     },
     meta: {
       lastSaveTime: now,

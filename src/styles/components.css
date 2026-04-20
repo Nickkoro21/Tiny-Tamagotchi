@@ -328,3 +328,14 @@
   transition: color 0.6s ease;
   animation: fadeIn 0.6s ease;
 }
+
+
+/* Phase 4: Message fade transition */
+.status-message {
+  transition: color 0.6s ease, opacity 0.3s ease;
+  min-height: 1.4em;
+}
+
+.status-message--fading {
+  opacity: 0;
+}
