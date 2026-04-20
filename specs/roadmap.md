@@ -52,9 +52,9 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 
 - [ ] Implement action logic in `engine/vitals.js` (or dedicated `actions.js`)
 - [ ] Define action effects:
-  - Feed: +25 Hunger, +5 Happiness
-  - Play: +20 Happiness, -10 Energy
-  - Rest: +30 Energy, +5 Happiness
+  - Feed: +30 Hunger, +5 Happiness
+  - Play: +25 Happiness, -10 Energy
+  - Rest: +35 Energy, +5 Happiness
 - [ ] Implement cooldown system (per action, configurable duration)
 - [ ] Implement diminishing returns for repeated same-action
 - [ ] Build `Actions.jsx` — three action buttons with cooldown indicators
@@ -77,8 +77,9 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 
 - [ ] Implement state machine in `engine/states.js`:
   - **Normal → Sick:** Any stat drops below 20
-  - **Sick → Normal:** All stats restored above 50 (recovery path)
-  - **Normal → Evolved:** totalCareActions exceeds threshold AND all stats above 70 for sustained period
+  - **Sick → Normal:** All stats restored to ≥ 50 (recovery path; `sustainedGoodCareStart` is reset to `null` — evolution must be re-earned)
+  - **Normal → Evolved:** `totalCareActions ≥ 6` **AND** all stats `> 70` for `≥ 15 s` sustained
+  - **Evolved → Sick:** Any stat drops below 20 (Evolved pet is resilient but not invincible — there is no direct Evolved → Normal transition)
 - [ ] Define state transition rules with clear thresholds
 - [ ] Build visual states in `pet.css`:
   - Normal: cyan glow, smooth idle animation
@@ -113,7 +114,7 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 - [ ] Context-aware reactions (stat combinations, time of day, action streaks)
 - [ ] Easter eggs:
   - Name-based: Special reaction for specific pet names (e.g., "HAL", "Jarvis")
-  - Milestone: Messages at care action milestones (10, 50, 100 actions)
+  - Milestone: Messages at care action milestones (10, 25, 50, 100 actions)
   - Hidden: Rare random messages (low probability per tick)
 - [ ] Evolution celebration animation
 - [ ] Polish idle animations (breathing, blinking, subtle movement)
