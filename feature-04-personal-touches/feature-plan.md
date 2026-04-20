@@ -2,7 +2,7 @@
 
 ## Overview
 
-Add a personality system that makes the pet feel alive through contextual dialogue, stat-aware reactions, and discoverable easter eggs. The pet speaks in tech jargon, reacts to stat combinations, celebrates milestones, and has hidden responses for special names — including aviation callsigns.
+Add a personality system that makes the pet feel alive through contextual dialogue, stat-aware reactions, and discoverable easter eggs. The pet speaks in tech jargon, reacts to stat combinations, celebrates milestones, and has hidden responses for special names — including aviation callsigns and personal tributes to the project author.
 
 ## Goal
 
@@ -69,21 +69,33 @@ The static status messages from Phase 3 become dynamic and contextual. The pet c
   - **All Critical** (all stats < 20): "MAYDAY MAYDAY! All systems failing! 🆘"
 
 ### Group 4: Easter Eggs
-- **Name-based** — special one-time greeting on naming:
+
+**Name-based** — special greeting on naming (11 names total across 3 themes, case-insensitive matching):
+
+  *Sci-fi theme (4):*
   - "HAL" → "I'm sorry Dave, I'm afraid I can't do that... just kidding! 🔴"
   - "Jarvis" → "At your service, sir. Shall I run diagnostics?"
   - "Cortana" → "Hey... I know you. Let's be friends."
   - "R2D2" → "Beep boop! *happy droid noises* 🤖"
+
+  *Aviation theme (4):*
   - "Maverick" → "Feel the need... the need for FEED! 🛩️"
   - "Goose" → "Talk to me, Goose... oh wait, I AM Goose! 🪿"
   - "Iceman" → "You can be my wingman anytime. ❄️"
   - "Viper" → "Tower, this is Viper requesting immediate care. 🗼"
-- **Milestone-based** — triggered at totalCareActions thresholds:
+
+  *Personal theme (3) — tribute to the project author:*
+  - "Nick" → "Hey Nick! Ready for some spec-driven caring? 📋"
+  - "Koro" → "Koro on deck! All specs checked, systems go! ✈️"
+  - "Nick Koro" → "The architect himself! SDD workflow activated. Welcome aboard, Captain! 🎖️"
+
+**Milestone-based** — triggered at totalCareActions thresholds:
   - 10 actions: "Achievement unlocked: First responder! 🏅"
   - 25 actions: "You're a natural caretaker. 25 actions logged."
   - 50 actions: "50 care cycles! Promoting you to Senior Engineer 🎖️"
   - 100 actions: "LEGENDARY: 100 actions. You are the chosen one."
-- **Rare random** — 5% chance per tick when all stats > 50:
+
+**Rare random** — 5% chance per tick when all stats > 50:
   - "Did you know I dream in binary? 01000110..."
   - "Sometimes I wonder if MY creator is also an AI..."
   - "Is this the real life? Is this just simulation?"

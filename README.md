@@ -6,61 +6,80 @@ A virtual pet web app built with **Spec-Driven Development** — where the speci
 
 ## 🎮 Live Demo
 
-Run locally — see [Setup](#setup) below.
+<!-- Screenshot placeholder — replace with actual screenshot/GIF after recording -->
+<!-- ![Tiny Tamagotchi screenshot](./docs/screenshot.png) -->
+
+> _📸 Screenshot / demo GIF will be added here after the video walkthrough._
+
+Run locally — see [Setup](#-setup) below.
 
 ## ✨ Features — The Four Pillars
 
 ### 1. Living Vitals
-Three stats (Hunger, Happiness, Energy) on a 0–100 scale that decay automatically in real time. Visual color feedback shifts from healthy → warning → critical as stats drop.
+Three stats (Hunger, Happiness, Energy) on a 0–100 scale that decay automatically in real time at different rates (Happiness fastest, Energy slowest). Visual color feedback shifts from healthy → warning → low → critical as stats drop.
 
 ### 2. The Care Loop
-Three actions — **Feed**, **Play**, **Rest** — each restore specific stats with cooldowns. Pet naming on first launch. State persists via localStorage with JSON export/import backup.
+Three actions — **Feed** (+30 hunger / +5 happiness), **Play** (+25 happiness / −10 energy), **Rest** (+35 energy / +5 happiness) — each with its own cooldown (3–5 s). Pet naming on first launch. State persists via `localStorage` with JSON export/import backup.
 
 ### 3. Dynamic States
-The pet transitions between three visual states:
+The pet transitions between three visual states with distinct decay modifiers:
 - **Normal** — cyan glow, smooth idle animation (decay ×1.0)
-- **Sick** — red glitch effect, distorted shape (decay ×1.5)
-- **Evolved** — purple glow, shimmer particles, bright eyes (decay ×0.7)
+- **Sick** — red glitch effect, distorted shape (decay ×1.5) — triggered when any stat drops below 20
+- **Evolved** — purple glow, shimmer particles, bright eyes (decay ×0.7) — unlocked after 6+ care actions with all stats > 70 for 15 s sustained
 
 ### 4. Personal Touches
-- Tech-themed personality messages cycling every 5 seconds
-- Context-aware reactions for stat combinations
-- Easter eggs for special names (HAL, Maverick, Goose, Iceman, Nick Koro, and more)
-- Milestone celebrations at 10, 25, 50, 100 care actions
-- Rare random messages (5% chance)
+- **Tech-themed personality messages** cycling every 5 seconds, priority-ranked (milestones > state > combos > low-stat warnings > rare > ambient)
+- **Context-aware reactions** for stat combinations (e.g., `Hungry + Tired`, `Full but Sad`, `All Critical = MAYDAY`)
+- **11 easter-egg names** across three themes (case-insensitive):
+  - **Sci-fi (4):** HAL, Jarvis, Cortana, R2D2
+  - **Aviation (4):** Maverick, Goose, Iceman, Viper
+  - **Personal (3):** Nick, Koro, Nick Koro
+- **Milestone celebrations** at 10, 25, 50, and 100 care actions (each shown once)
+- **Rare random messages** (5% chance when all stats > 50)
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| UI Framework | Preact ^10.x |
-| Build Tool | Vite ^6.x |
-| Styling | Vanilla CSS (custom properties) |
-| Testing | Vitest ^3.x |
-| Language | JavaScript (ES2022+, JSX) |
-| Persistence | localStorage + JSON export/import |
+| Layer | Technology | Rationale |
+|-------|-----------|-----------|
+| UI Framework | Preact ^10.x | 3 KB runtime, React-compatible API — lightweight for an MVP |
+| Build Tool | Vite ^6.x | Instant dev server, zero-config HMR, fast builds |
+| Styling | Vanilla CSS (custom properties) | No framework lock-in, full theme control via CSS variables |
+| Testing | Vitest ^3.x | Native Vite integration, Jest-compatible API, first-class ESM |
+| Language | JavaScript (ES2022+, JSX) | No transpile cost beyond Vite; modern syntax without a type-checker in the loop |
+| Persistence | localStorage + JSON export/import | Client-only — no backend needed for a single-user MVP |
+
+> **Why this stack?** Each choice was made to minimize MVP complexity while keeping the door open for later upgrades (e.g., swapping Preact for React, or localStorage for IndexedDB). Nothing here blocks scale; everything here accelerates shipping.
 
 ## 📂 Project Structure
 
 ```
 TinyTamagotchi/
 ├── specs/                          # SDD Constitution
-│   ├── mission.md                  # Vision, audience, scope
-│   ├── tech-stack.md               # Architecture decisions
-│   └── roadmap.md                  # Development phases
-├── feature-01-living-vitals/       # Feature specs (per phase)
+│   ├── mission.md                  #   Vision, audience, scope
+│   ├── tech-stack.md               #   Architecture decisions
+│   └── roadmap.md                  #   Development phases
+├── feature-01-living-vitals/       # Feature specs (per phase) — same 3-file SDD structure
+│   ├── feature-plan.md             #     Task groups, approach, sequence
+│   ├── requirements.md             #     Functional + non-functional reqs
+│   └── validation.md               #     Unit tests + manual checklist
+├── feature-02-care-loop/
 │   ├── feature-plan.md
 │   ├── requirements.md
 │   └── validation.md
-├── feature-02-care-loop/
 ├── feature-03-dynamic-states/
+│   ├── feature-plan.md
+│   ├── requirements.md
+│   └── validation.md
 ├── feature-04-personal-touches/
+│   ├── feature-plan.md
+│   ├── requirements.md
+│   └── validation.md
 ├── src/
 │   ├── engine/                     # Pure game logic (no UI)
-│   │   ├── gameState.js
-│   │   ├── vitals.js
-│   │   ├── states.js
-│   │   └── personality.js
+│   │   ├── gameState.js            #     State shape + factory
+│   │   ├── vitals.js               #     Decay + actions + clamps
+│   │   ├── states.js               #     Normal/Sick/Evolved state machine
+│   │   └── personality.js          #     Messages, easter eggs, milestones
 │   ├── components/                 # Preact UI components
 │   ├── persistence/                # Save/load (localStorage + JSON)
 │   └── styles/                     # CSS (dark sci-fi theme)
@@ -92,20 +111,36 @@ This project follows the **Spec-Driven Development** workflow:
 
 1. **Constitution** — Define mission, tech stack, and roadmap
 2. **Feature Loop** (per feature):
-   - **Plan** → feature-plan.md
-   - **Requirements** → requirements.md
-   - **Validation** → validation.md
+   - **Plan** → `feature-plan.md`
+   - **Requirements** → `requirements.md`
+   - **Validation** → `validation.md`
    - **Implement** → write code following specs
    - **Validate** → run tests, manual checks
 3. **Replan** — review and update between features
 
 The specs are the **primary artifact** — they capture every decision and drive the implementation.
 
+## 📊 Spec Quality
+
+Snapshot of the spec-driven output at submission time:
+
+| Metric | Value |
+|--------|------:|
+| Constitution docs | 3 (mission, tech-stack, roadmap) |
+| Feature specs | 12 (4 features × plan / requirements / validation) |
+| Total spec files | **15** |
+| Unit tests | **129** (6 suites: vitals, actions, states, personality, persistence, gameState) |
+| Engine modules | 4 (gameState, vitals, states, personality) |
+| Testing levels | 2 (automated Vitest + manual validation checklists per feature) |
+| Easter-egg names | 11 (across sci-fi / aviation / personal themes) |
+| Milestones | 4 (10 / 25 / 50 / 100 care actions) |
+| Dynamic states | 3 (Normal / Sick / Evolved) with distinct decay multipliers |
+
 ## 🧪 Testing
 
-- **Unit tests:** 100+ tests covering vitals, actions, state transitions, personality, persistence
-- **Manual validation:** Checklists in each feature's `validation.md`
-- **Two levels:** Automated (Vitest) + manual (visual/interaction checks)
+- **Unit tests:** 129 tests across 6 suites — covering vitals decay, care actions, state transitions, personality messages, easter eggs, milestones, and persistence
+- **Manual validation:** Checklists in each feature's `validation.md` (message variety, state transitions, easter eggs, responsive layout, persistence round-trips)
+- **Two levels of difficulty:** Automated (Vitest) + manual (visual / interaction checks)
 
 ```bash
 npm run test
