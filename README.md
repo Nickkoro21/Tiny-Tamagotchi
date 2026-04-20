@@ -6,12 +6,36 @@ A virtual pet web app built with **Spec-Driven Development** — where the speci
 
 ## 🎮 Live Demo
 
-<!-- Screenshot placeholder — replace with actual screenshot/GIF after recording -->
+### 🎥 Video Walkthrough
+
+<!-- ⬇️ REPLACE THIS PLACEHOLDER AFTER RECORDING ⬇️ -->
+<!-- Paste the video URL (YouTube / Loom / Vimeo / direct MP4) between the parentheses -->
+
+> _🎬 **Video walkthrough coming soon** — will be embedded here._
+>
+> _Planned coverage: naming a pet, real-time vitals decay, the care loop (Feed / Play / Rest), the state machine (Normal → Sick recovery + Normal → Evolved), personality messages cycling, and easter-egg names (`Maverick`, `HAL`, `Nick Koro`)._
+
+<!-- Once uploaded, replace the above blockquote with one of these formats:
+
+  Option A — YouTube/Vimeo thumbnail link:
+  [![Tiny Tamagotchi walkthrough](./docs/video-thumbnail.png)](https://youtu.be/YOUR_VIDEO_ID)
+
+  Option B — Loom embed link (GitHub renders as preview):
+  https://www.loom.com/share/YOUR_LOOM_ID
+
+  Option C — Direct inline GIF (for shorter demos):
+  ![Tiny Tamagotchi demo](./docs/demo.gif)
+-->
+
+### 📸 Screenshot
+
 <!-- ![Tiny Tamagotchi screenshot](./docs/screenshot.png) -->
 
-> _📸 Screenshot / demo GIF will be added here after the video walkthrough._
+> _A screenshot will be added here alongside the video._
 
-Run locally — see [Setup](#-setup) below.
+### 🖥 Run it yourself
+
+Local setup in [Setup](#-setup) below — `npm install && npm run dev` → `http://localhost:5173`.
 
 ## ✨ Features — The Four Pillars
 
