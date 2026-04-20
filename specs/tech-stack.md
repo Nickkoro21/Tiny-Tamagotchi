@@ -140,9 +140,9 @@ Vitals decay using `requestAnimationFrame` or `setInterval` (1-second tick). On 
 Decay rates (per minute, configurable):
 | Stat      | Decay Rate | Notes                          |
 |-----------|-----------|--------------------------------|
-| Hunger    | -2/min    | Fastest decay — needs most attention |
-| Happiness | -1.5/min  | Medium decay                   |
-| Energy    | -1/min    | Slowest decay                  |
+| Hunger    | -200/min  | Fastest decay (~30s drain) — demo speed |
+| Happiness | -300/min  | Fastest stat (~20s drain) — demo speed |
+| Energy    | -133/min  | Slowest decay (~45s drain) — demo speed |
 
 ### 5. Styling Strategy
 

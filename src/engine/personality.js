@@ -170,8 +170,8 @@ const STATE_COLORS = {
  *
  * Priority order:
  *   1. Milestone messages
- *   2. Stat combination reactions
- *   3. State-specific messages (sick, evolved)
+ *   2. State-specific messages (sick, evolved) — override combos and warnings
+ *   3. Stat combination reactions
  *   4. Single low-stat warnings (< 40)
  *   5. Rare random messages (5% chance, all stats > 50)
  *   6. Ambient healthy messages (all stats > 70)
@@ -194,7 +194,15 @@ export function getMessage(state, lastText = null) {
     };
   }
 
-  // --- 2. Stat combinations ---
+  // --- 2. State-specific messages (sick/evolved override combos) ---
+  if (petState === 'sick') {
+    return { text: pickRandom(MESSAGES_SICK, lastText), colorVar: STATE_COLORS.sick };
+  }
+  if (petState === 'evolved') {
+    return { text: pickRandom(MESSAGES_EVOLVED, lastText), colorVar: STATE_COLORS.evolved };
+  }
+
+  // --- 3. Stat combinations ---
   if (hunger < 20 && happiness < 20 && energy < 20) {
     return { text: MESSAGES_COMBO.allCritical, colorVar: STATE_COLORS.sick };
   }
@@ -206,14 +214,6 @@ export function getMessage(state, lastText = null) {
   }
   if (hunger > 80 && happiness < 30) {
     return { text: MESSAGES_COMBO.fullButSad, colorVar: STATE_COLORS.warning };
-  }
-
-  // --- 3. State-specific messages ---
-  if (petState === 'sick') {
-    return { text: pickRandom(MESSAGES_SICK, lastText), colorVar: STATE_COLORS.sick };
-  }
-  if (petState === 'evolved') {
-    return { text: pickRandom(MESSAGES_EVOLVED, lastText), colorVar: STATE_COLORS.evolved };
   }
 
   // --- 4. Single low-stat warnings ---

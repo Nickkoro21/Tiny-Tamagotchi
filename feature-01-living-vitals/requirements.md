@@ -14,9 +14,9 @@
 - Decay rates (per minute, configurable):
   | Stat      | Rate     |
   |-----------|----------|
-  | Hunger    | -2.0/min |
-  | Happiness | -1.5/min |
-  | Energy    | -1.0/min |
+  | Hunger    | -200/min  |
+  | Happiness | -300/min  |
+  | Energy    | -133/min  |
 - Decay formula: `newValue = oldValue - (rate * elapsedMinutes)`
 - Decay continues accumulating when the browser tab is inactive (catch-up on return)
 

@@ -135,3 +135,37 @@ describe('Phase 3 backward compatibility', () => {
     expect(validateState(state)).toBe(false);
   });
 });
+
+
+// ============================================
+// Phase 4: lastMilestoneShown Backward Compatibility
+// ============================================
+describe('Phase 4 backward compatibility', () => {
+  it('save/load preserves lastMilestoneShown', () => {
+    const state = createInitialState('TestBot');
+    state.pet.lastMilestoneShown = 25;
+    saveToLocalStorage(state);
+    const loaded = loadFromLocalStorage();
+    expect(loaded.pet.lastMilestoneShown).toBe(25);
+  });
+
+  it('loads save missing lastMilestoneShown (defaults to 0)', () => {
+    const oldSave = {
+      pet: {
+        name: 'OldBot',
+        hunger: 80, happiness: 70, energy: 60,
+        state: 'normal',
+        createdAt: Date.now(),
+        totalCareActions: 5,
+        lastFed: Date.now(),
+        lastPlayed: Date.now(),
+        lastRested: Date.now(),
+      },
+      meta: { lastSaveTime: Date.now(), version: '1.0.0' },
+    };
+    localStorage.setItem('tamagotchi_save', JSON.stringify(oldSave));
+    const loaded = loadFromLocalStorage();
+    expect(loaded).not.toBeNull();
+    expect(loaded.pet.lastMilestoneShown).toBe(0);
+  });
+});

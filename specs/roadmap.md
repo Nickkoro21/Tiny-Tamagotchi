@@ -12,7 +12,7 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 
 ---
 
-## Phase 0: Project Scaffold ✅→⬜
+## Phase 0: Project Scaffold ✅
 
 **Goal:** Bootable Preact app with folder structure, dev server, and empty component shells.
 
@@ -27,7 +27,7 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 
 ---
 
-## Phase 1: Living Vitals (Pillar 1)
+## Phase 1: Living Vitals (Pillar 1) ✅
 
 **Goal:** Three stats (Hunger, Happiness, Energy) that decay automatically over time, with visual indicators.
 
@@ -46,7 +46,7 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 
 ---
 
-## Phase 2: The Care Loop (Pillar 2)
+## Phase 2: The Care Loop (Pillar 2) ✅
 
 **Goal:** Three actions (Feed, Play, Rest) that restore specific stats with cooldowns.
 
@@ -71,7 +71,7 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 
 ---
 
-## Phase 3: Dynamic States (Pillar 3)
+## Phase 3: Dynamic States (Pillar 3) ✅
 
 **Goal:** Pet transitions between Normal, Sick, and Evolved states with distinct visuals.
 
@@ -97,7 +97,7 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 
 ---
 
-## Phase 4: Personal Touches (Pillar 4)
+## Phase 4: Personal Touches (Pillar 4) ✅
 
 **Goal:** Easter eggs, quirky reactions, and personality that make the pet feel alive.
 
