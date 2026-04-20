@@ -74,6 +74,18 @@
 - `validateState()` must accept saves **with or without** this field (backward compatibility)
 - If loaded save is missing `sustainedGoodCareStart`, default to `null`
 
+### FR-9: Zero Stats Edge Case
+- When all three stats simultaneously reach **0**, the pet enters **Critical Stasis**
+- Stats are clamped at 0 and cannot go negative (enforced by existing `clamp()` in `vitals.js`)
+- The pet remains in `"sick"` state — no new state is introduced
+- All care actions (Feed, Play, Rest) remain **fully functional** at 0 stats
+- Recovery path is unchanged: Sick → Normal when all stats ≥ 50
+- **Permanent death is explicitly prohibited** per challenge requirements
+- A recovery hint message is displayed in the status area when all three stats = 0:
+  - Text: `⚠ CRITICAL STASIS — Use Feed, Play, Rest to restore systems`
+  - Color: `var(--accent-danger)` (same as sick state)
+  - This overrides the normal cycling personality message while all stats remain at 0
+
 ## Non-Functional Requirements
 
 ### NFR-1: Pure Functions

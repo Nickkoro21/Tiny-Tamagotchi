@@ -2,11 +2,20 @@
  * Status message — displays contextual personality messages.
  * Phase 3: Basic state messages
  * Phase 4: Dynamic personality system with cycling messages
+ * Replan (post-Phase-4): FR-9 Critical Stasis hint when all stats = 0
  */
 import { useState, useEffect, useRef } from 'preact/hooks';
 import { getMessage } from '../engine/personality.js';
 
 const MESSAGE_CYCLE_MS = 5000; // Update message every 5 seconds
+
+/**
+ * Returns true if all three vital stats are exactly 0 (Critical Stasis).
+ * Per FR-9: permanent death is prohibited; this is a recoverable state.
+ */
+function isInCriticalStasis(pet) {
+  return pet.hunger === 0 && pet.happiness === 0 && pet.energy === 0;
+}
 
 export function StatusMessage({ gameState, forceUpdate }) {
   const [displayText, setDisplayText] = useState('');
@@ -18,6 +27,21 @@ export function StatusMessage({ gameState, forceUpdate }) {
   // Get and display a new message
   const updateMessage = () => {
     if (!gameState) return;
+
+    // FR-9: Critical Stasis override — all stats at 0
+    if (isInCriticalStasis(gameState.pet)) {
+      const hintText = '⚠ CRITICAL STASIS — Use Feed, Play, Rest to restore systems';
+      if (hintText !== lastTextRef.current) {
+        setFading(true);
+        setTimeout(() => {
+          setDisplayText(hintText);
+          setColorVar('--accent-danger');
+          lastTextRef.current = hintText;
+          setFading(false);
+        }, 300);
+      }
+      return;
+    }
 
     const result = getMessage(gameState, lastTextRef.current);
 
