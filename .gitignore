@@ -17,8 +17,12 @@ Thumbs.db
 .env.local
 
 # Video production (local assets — not for repo)
+# — .md guides under docs/ and docs/video/ ARE tracked; only media files are ignored
 docs/music/
 docs/raw-recordings/
-docs/*.mp4
-docs/*.mkv
-docs/*.mov
+docs/**/*.mp4
+docs/**/*.mkv
+docs/**/*.mov
+docs/**/*.webm
+docs/**/*.avi
+docs/**/*.m4v
