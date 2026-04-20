@@ -55,6 +55,9 @@
 | 25 | `applyDecay` with multiplier 1.5 (sick) | Decay is 50% faster than normal |
 | 26 | `applyDecay` with multiplier 0.7 (evolved) | Decay is 30% slower than normal |
 | 27 | `applyDecay` without multiplier argument | Behaves exactly as before (defaults to 1.0) |
+| 28-a | `clamp` prevents negative: decay on stat at 0 | `applyDecay` on pet with all stats: 0 | All stats remain exactly 0 |
+| 28-b | Recovery from zero: Feed restores hunger | `feedPet` on state with hunger: 0 | hunger = 30 (clamp(0 + 30)) |
+| 28-c | Recovery from zero: Rest restores energy | `restPet` on state with energy: 0 | energy = 35 (clamp(0 + 35)) |
 
 ### Test Suite: persistence.test.js (extend existing)
 
@@ -124,6 +127,10 @@
 - [ ] Stats exactly at threshold: 20 (not sick), 50 (triggers recovery), 70 (not sustained)
 - [ ] Rapid state cycling (sick → normal → sick quickly) → no visual glitches
 - [ ] Evolved pet with decaying stats: verify ×0.7 rate until stat < 20 triggers Sick
+- [ ] All three stats reach 0 simultaneously → pet stays Sick, no permanent death, care actions still functional
+- [ ] With all stats at 0: Feed restores hunger to 30, Rest restores energy to 35, Play restores happiness to 25
+- [ ] Recovery hint `⚠ CRITICAL STASIS — Use Feed, Play, Rest to restore systems` visible when all stats = 0
+- [ ] Full recovery from 0 stats possible: bring all stats ≥ 50 → Normal state transition occurs
 
 ## Acceptance Criteria
 
