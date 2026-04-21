@@ -16,13 +16,31 @@ Thumbs.db
 .env
 .env.local
 
-# Video production (local assets — not for repo)
-# — .md guides under docs/ and docs/video/ ARE tracked; only media files are ignored
+# ============================================================
+# Video production & internal notes (local-only assets)
+# ============================================================
+# Private design/planning notes at docs/ root (not for public repo)
+docs/*.md
+
+# Music assets (too large, licensing-sensitive)
 docs/music/
 docs/raw-recordings/
+
+# Video files (kept local; reviewers see the OneDrive link in docs/video/video_link.txt)
+docs/video/*.mp4
+docs/video/*.mkv
+docs/video/*.mov
+docs/video/*.webm
+docs/video/*.avi
+docs/video/*.m4v
+
+# Legacy recursive pattern (kept as a safety net for any future nested folders)
 docs/**/*.mp4
 docs/**/*.mkv
 docs/**/*.mov
 docs/**/*.webm
 docs/**/*.avi
 docs/**/*.m4v
+
+# NOTE: docs/screenshot/ and docs/video/video_link.txt are intentionally TRACKED
+#       (screenshots for README, OneDrive link for video walkthrough)

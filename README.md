@@ -8,30 +8,21 @@ A virtual pet web app built with **Spec-Driven Development** — where the speci
 
 ### 🎥 Video Walkthrough
 
-<!-- ⬇️ REPLACE THIS PLACEHOLDER AFTER RECORDING ⬇️ -->
-<!-- Paste the video URL (YouTube / Loom / Vimeo / direct MP4) between the parentheses -->
+**▶️ [Watch the walkthrough on OneDrive](https://1drv.ms/v/c/ff86a1b8b4e7e459/IQDbV2FWswfkSLguL2nBirRSAZDuDDtiYuIX9B8qEKl0wNo?e=JUF0YB)**
 
-> _🎬 **Video walkthrough coming soon** — will be embedded here._
->
-> _Planned coverage: naming a pet, real-time vitals decay, the care loop (Feed / Play / Rest), the state machine (Normal → Sick recovery + Normal → Evolved), personality messages cycling, and easter-egg names (`Nick Koro`, `Maverick`, `HAL`)._
+The video covers:
+- Naming a pet (including an easter-egg name reveal)
+- Real-time vitals decay (Hunger / Happiness / Energy at different rates)
+- The care loop — Feed, Play, Rest — and their cooldowns
+- The state machine: Normal → Sick recovery, then Normal → Evolved progression
+- Personality messages cycling, including combo reactions and milestone pops
+- The SDD workflow — specs driving every feature, not the other way around
 
-<!-- Once uploaded, replace the above blockquote with one of these formats:
+### 📸 At a glance
 
-  Option A — YouTube/Vimeo thumbnail link:
-  [![Tiny Tamagotchi walkthrough](./docs/video-thumbnail.png)](https://youtu.be/YOUR_VIDEO_ID)
+![Tiny Tamagotchi — Normal state](./docs/screenshot/normal_status.jpg)
 
-  Option B — Loom embed link (GitHub renders as preview):
-  https://www.loom.com/share/YOUR_LOOM_ID
-
-  Option C — Direct inline GIF (for shorter demos):
-  ![Tiny Tamagotchi demo](./docs/demo.gif)
--->
-
-### 📸 Screenshot
-
-<!-- ![Tiny Tamagotchi screenshot](./docs/screenshot.png) -->
-
-> _A screenshot will be added here alongside the video._
+_The main game view: Hunger / Happiness / Energy bars with live decay, care action buttons, and a cycling personality message above the blob._
 
 ### 🖥 Run it yourself
 
@@ -42,14 +33,31 @@ Local setup in [Setup](#-setup) below — `npm install && npm run dev` → `http
 ### 1. Living Vitals
 Three stats (Hunger, Happiness, Energy) on a 0–100 scale that decay automatically in real time at different rates — **Hunger fastest (~30 s), Happiness mid (~35 s), Energy slowest (~45 s)**. Visual color feedback shifts from healthy → warning → low → critical as stats drop.
 
+![Warning state — one stat below 70](./docs/screenshot/below_70.jpg)
+
+_Stat bars shift color as values cross thresholds — here one stat has dropped into the warning band._
+
 ### 2. The Care Loop
 Three actions — **Feed** (+30 hunger / +5 happiness), **Play** (+25 happiness / −10 energy), **Rest** (+35 energy / +5 happiness) — each with its own cooldown (3–5 s). Pet naming on first launch. State persists via `localStorage` with JSON export/import backup.
 
 ### 3. Dynamic States
 The pet transitions between three visual states with distinct decay modifiers:
-- **Normal** — cyan glow, smooth idle animation (decay ×1.0)
-- **Sick** — red glitch effect, distorted shape (decay ×1.5) — triggered when any stat drops below 20
-- **Evolved** — purple glow, shimmer particles, bright eyes (decay ×0.7) — unlocked after 6+ care actions with all stats > 70 for 15 s sustained
+
+| State       | Trigger                                              | Decay | Visual                                      |
+|-------------|------------------------------------------------------|-------|---------------------------------------------|
+| **Normal**  | Default healthy state                                | ×1.0  | Cyan glow, smooth idle animation            |
+| **Sick**    | Any stat drops below 20                              | ×1.5  | Red glitch effect, distorted shape          |
+| **Evolved** | 6+ care actions **AND** all stats > 70 for 15 s     | ×0.7  | Purple glow, shimmer particles, bright eyes |
+
+Evolved pets can regress to Sick if neglected — there's no direct Evolved → Normal path. After recovering from Sick, evolution must be re-earned.
+
+![Sick state — red glitch, distorted shape](./docs/screenshot/sick_status.jpg)
+
+_The Sick state — red danger tint, glitch animation, and accelerated decay._
+
+![Evolved state — purple glow, shimmer](./docs/screenshot/evolved_status.jpg)
+
+_The Evolved state — purple glow, shimmer particles, and slower decay as the reward for sustained care._
 
 ### 4. Personal Touches
 - **Tech-themed personality messages** cycling every 5 seconds, priority-ranked (milestones > state > combos > low-stat warnings > rare > ambient)
@@ -60,6 +68,10 @@ The pet transitions between three visual states with distinct decay modifiers:
   - **Personal (3):** Nick, Koro, Nick Koro
 - **Milestone celebrations** at 10, 25, 50, and 100 care actions (each shown once)
 - **Rare random messages** (5% chance when all stats > 50)
+
+![Easter-egg reaction for a known name](./docs/screenshot/easter_egg.jpg)
+
+_Name your pet `Nick Koro`, `Maverick`, `HAL`, or any of the 11 recognised names for a themed greeting._
 
 ## 🛠️ Tech Stack
 
@@ -160,7 +172,7 @@ Snapshot of the spec-driven output at submission time:
 | Milestones | 4 (10 / 25 / 50 / 100 care actions) |
 | Dynamic states | 3 (Normal / Sick / Evolved) with distinct decay multipliers |
 
-## 🧪 Testing
+## 🧪 Testing & Quality Evidence
 
 - **Unit tests:** 129 tests across 6 suites — covering vitals decay, care actions, state transitions, personality messages, easter eggs, milestones, and persistence
 - **Manual validation:** Checklists in each feature's `validation.md` (message variety, state transitions, easter eggs, responsive layout, persistence round-trips)
@@ -170,6 +182,14 @@ Snapshot of the spec-driven output at submission time:
 npm run test
 ```
 
+![npm test — 129/129 passing](./docs/screenshot/npm_test.jpg)
+
+_All 129 tests green — evidence that the validation strategies in each `validation.md` are executable and passing._
+
+![npm run build — clean production build](./docs/screenshot/npm_build.jpg)
+
+_Clean production build — no errors, no warnings._
+
 ## 📋 Challenge Submission
 
 - **Challenge:** DeepLearning.AI 7-Day Learner Challenge
@@ -178,4 +198,4 @@ npm run test
 
 ## 📄 License
 
-MIT
+MIT — see [LICENSE](./LICENSE).
