@@ -2,6 +2,8 @@
 
 A virtual pet web app built with **Spec-Driven Development** — where the specification is the primary artifact, and the code follows.
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE) [![Preact](https://img.shields.io/badge/Preact-10.x-673AB8?logo=preact&logoColor=white)](https://preactjs.com/) [![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/) [![Vitest](https://img.shields.io/badge/Vitest-3.x-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/) [![Tests](https://img.shields.io/badge/tests-129%20passing-brightgreen)](./tests)
+
 > Built for the [DeepLearning.AI 7-Day Learner Challenge](https://community.deeplearning.ai/t/7-day-learner-challenge-tiny-tamagotchi-mvp-with-spec-driven-development/891489) (Spec-Driven Development with Coding Agents course).
 
 ## 🎮 Live Demo
@@ -201,7 +203,17 @@ _Clean production build — no errors, no warnings._
 - **[Paul Everitt](https://x.com/paulweveritt)** — Developer Advocate at JetBrains, instructor of the [Spec-Driven Development with Coding Agents](https://learn.deeplearning.ai/courses/spec-driven-development-with-coding-agents/information) short course. The constitution / feature-loop / replan workflow applied throughout this project is his.
 - **[JetBrains](https://www.jetbrains.com/)** × **[DeepLearning.AI](https://www.deeplearning.ai/)** — for building and hosting the course and the accompanying [7-Day Learner Challenge](https://community.deeplearning.ai/t/7-day-learner-challenge-tiny-tamagotchi-mvp-with-spec-driven-development/891489).
 - **[Claude (Anthropic)](https://www.anthropic.com/claude)** — AI pair programmer. Drafted specs, implemented features, and surfaced edge cases under human-in-the-loop review at every step — true to the SDD ethos that the human is the architect and the agent is the muscle.
-- **Nick Koroniadis** — project author, spec architect, and reviewer. [GitHub (@Nickkoro21)](https://github.com/Nickkoro21) · [LinkedIn](https://www.linkedin.com/in/nick-koroniadis-328962226/)
+
+---
+
+### Author
+
+**Nikolaos Koroniadis**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Nick_Koroniadis-0077B5?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/nick-koroniadis-328962226/) [![GitHub](https://img.shields.io/badge/GitHub-@Nickkoro21-181717?style=flat&logo=github&logoColor=white)](https://github.com/Nickkoro21)
+
+MSc Candidate — Geography and Applied Geoinformatics  
+University of the Aegean
 
 ## 📄 License
 
