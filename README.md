@@ -201,7 +201,7 @@ _Clean production build — no errors, no warnings._
 - **[Paul Everitt](https://x.com/paulweveritt)** — Developer Advocate at JetBrains, instructor of the [Spec-Driven Development with Coding Agents](https://learn.deeplearning.ai/courses/spec-driven-development-with-coding-agents/information) short course. The constitution / feature-loop / replan workflow applied throughout this project is his.
 - **[JetBrains](https://www.jetbrains.com/)** × **[DeepLearning.AI](https://www.deeplearning.ai/)** — for building and hosting the course and the accompanying [7-Day Learner Challenge](https://community.deeplearning.ai/t/7-day-learner-challenge-tiny-tamagotchi-mvp-with-spec-driven-development/891489).
 - **[Claude (Anthropic)](https://www.anthropic.com/claude)** — AI pair programmer. Drafted specs, implemented features, and surfaced edge cases under human-in-the-loop review at every step — true to the SDD ethos that the human is the architect and the agent is the muscle.
-- **Nick Koro** ([@Nickkoro21](https://github.com/Nickkoro21)) — project author, spec architect, and reviewer.
+- **Nick Koroniadis** — project author, spec architect, and reviewer. [GitHub (@Nickkoro21)](https://github.com/Nickkoro21) · [LinkedIn](https://www.linkedin.com/in/nick-koroniadis-328962226/)
 
 ## 📄 License
 
