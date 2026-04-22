@@ -2,11 +2,17 @@
 
 A virtual pet web app built with **Spec-Driven Development** — where the specification is the primary artifact, and the code follows.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE) [![Preact](https://img.shields.io/badge/Preact-10.x-673AB8?logo=preact&logoColor=white)](https://preactjs.com/) [![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/) [![Vitest](https://img.shields.io/badge/Vitest-3.x-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/) [![Tests](https://img.shields.io/badge/tests-129%20passing-brightgreen)](./tests)
+[![Live Demo](https://img.shields.io/badge/▶️_Live_Demo-Play_online-FF6B9D?style=flat)](https://nickkoro21.github.io/Tiny-Tamagotchi/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE) [![Preact](https://img.shields.io/badge/Preact-10.x-673AB8?logo=preact&logoColor=white)](https://preactjs.com/) [![Vite](https://img.shields.io/badge/Vite-6.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/) [![Vitest](https://img.shields.io/badge/Vitest-3.x-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/) [![Tests](https://img.shields.io/badge/tests-129%20passing-brightgreen)](./tests) [![Deploy](https://github.com/Nickkoro21/Tiny-Tamagotchi/actions/workflows/deploy.yml/badge.svg)](https://github.com/Nickkoro21/Tiny-Tamagotchi/actions/workflows/deploy.yml)
 
 > Built for the [DeepLearning.AI 7-Day Learner Challenge](https://community.deeplearning.ai/t/7-day-learner-challenge-tiny-tamagotchi-mvp-with-spec-driven-development/891489) (Spec-Driven Development with Coding Agents course).
 
 ## 🎮 Live Demo
+
+### ▶️ Play it in your browser
+
+**👉 [https://nickkoro21.github.io/Tiny-Tamagotchi/](https://nickkoro21.github.io/Tiny-Tamagotchi/)**
+
+No install, no clone — just open the link, name your pet, and start caring. State persists in `localStorage` across reloads.
 
 ### 🎥 Video Walkthrough
 

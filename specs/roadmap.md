@@ -5,9 +5,9 @@
 Development follows a linear feature sequence. Each phase builds on the previous one. Features are ordered by dependency: vitals must exist before actions can modify them, actions must work before state transitions can evaluate them, and states must function before personality can react to them.
 
 ```
-Phase 0 ──▶ Phase 1 ──▶ Phase 2 ──▶ Phase 3 ──▶ Phase 4 ──▶ Phase 5
-Scaffold    Living       Care        Dynamic      Personal    Polish
-            Vitals       Loop        States       Touches     & MVP
+Phase 0 ──▶ Phase 1 ──▶ Phase 2 ──▶ Phase 3 ──▶ Phase 4 ──▶ Phase 5 ──▶ Phase 6
+Scaffold    Living       Care        Dynamic      Personal    Polish       A11y
+            Vitals       Loop        States       Touches     & MVP        (post-MVP)
 ```
 
 ---
@@ -143,6 +143,36 @@ Scaffold    Living       Care        Dynamic      Personal    Polish
 **Deliverable:** Submission-ready repo with working app and video.
 
 **Depends on:** Phase 4
+
+---
+
+## Phase 6: Accessibility (a11y) 📍 _Planned — post-MVP_
+
+**Goal:** Make the application usable for people who rely on screen readers, keyboard-only navigation, or reduced motion — following WCAG 2.1 AA and the principle that accessibility is **always-on**, not a toggle.
+
+> **Design note:** Accessibility is not implemented as a "blind-friendly mode" button. A user who cannot see the screen cannot discover and activate such a toggle. Instead, a11y affordances are baked into the default UI and progressively enhance the experience for assistive-technology users without altering the experience for sighted users.
+
+- [ ] **Semantic structure audit** — verify landmarks (`<main>`, `<header>`, `<footer>`), heading hierarchy (single `<h1>`, logical `<h2>` progression), and list semantics for the vitals display
+- [ ] **ARIA labels on action buttons** — `aria-label="Feed pet (+30 hunger, +5 happiness)"` etc., including cooldown state (`aria-disabled`, `aria-describedby` pointing to cooldown timer)
+- [ ] **Live regions for vitals** — `aria-live="polite"` on the stats container so screen readers announce stat changes after actions; `aria-live="assertive"` on state transitions (Normal → Sick → Evolved)
+- [ ] **Keyboard navigation** — full tab order through naming → actions → reset; visible focus indicators on all interactive elements (outline, never `outline: none` without replacement)
+- [ ] **Stat values in text, not just color** — already partially done (numeric values shown); verify no information is conveyed by color alone (WCAG 1.4.1)
+- [ ] **Color contrast audit** — verify all text against backgrounds at WCAG AA ratios (4.5:1 for body, 3:1 for large text and UI components), especially the Sick-state red tint and Evolved-state purple glow
+- [ ] **`prefers-reduced-motion` support** — disable or simplify the idle breathing animation, glitch effect (Sick), and shimmer particles (Evolved) when the user has reduced-motion preference set
+- [ ] **Screen reader testing** — manual walkthrough with NVDA (Windows) and VoiceOver (macOS): name a pet, perform actions, observe state transitions, trigger an easter egg
+- [ ] **Personality messages announced** — verify that cycling personality messages reach the screen reader (likely via `aria-live="polite"` on the message container with debounce to avoid flooding)
+- [ ] **Easter-egg naming still accessible** — the case-insensitive matching already works; verify the reaction text is announced
+- [ ] Unit tests for ARIA attributes on rendered components (via Vitest + @testing-library/preact queries like `getByRole`, `getByLabelText`)
+- [ ] Automated a11y audit via `axe-core` / `vitest-axe` integration (CI-runnable)
+
+**Deliverable:** WCAG 2.1 AA compliant application, tested with at least one screen reader and validated with an automated a11y linter.
+
+**Depends on:** Phase 5 (submission)
+
+**Deferred from MVP because:**
+- Proper a11y is cross-cutting (touches every component) and not a feature toggle
+- Requires its own full SDD cycle (plan / requirements / validation) to do correctly
+- The MVP scope is satisfied without it per challenge rules; a11y is a quality commitment, not a challenge deliverable
 
 ---
 
