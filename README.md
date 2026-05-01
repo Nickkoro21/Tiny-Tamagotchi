@@ -6,6 +6,8 @@ A virtual pet web app built with **Spec-Driven Development** — where the speci
 
 > Built for the [DeepLearning.AI 7-Day Learner Challenge](https://community.deeplearning.ai/t/7-day-learner-challenge-tiny-tamagotchi-mvp-with-spec-driven-development/891489) (Spec-Driven Development with Coding Agents course).
 
+🥉 **Awarded 3rd place** in the [DeepLearning.AI 7-Day Spec-Driven Dev Challenge](https://community.deeplearning.ai/t/7-day-challenge-tamagotchi-challenge-winners/891943) — try the [live demo](https://nickkoro21.github.io/Tiny-Tamagotchi/) or [watch the walkthrough](https://1drv.ms/v/c/ff86a1b8b4e7e459/IQDbV2FWswfkSLguL2nBirRSAZDuDDtiYuIX9B8qEKl0wNo?e=JUF0YB).
+
 ## 🎮 Live Demo
 
 ### ▶️ Play it in your browser
