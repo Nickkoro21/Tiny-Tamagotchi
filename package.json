@@ -16,7 +16,7 @@
   "devDependencies": {
     "@preact/preset-vite": "^2.9.4",
     "jsdom": "^29.0.2",
-    "vite": "^6.3.2",
-    "vitest": "^3.1.1"
+    "vite": "^8.1.2",
+    "vitest": "^4.1.9"
   }
 }
